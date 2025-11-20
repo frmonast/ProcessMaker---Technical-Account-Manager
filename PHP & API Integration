@@ -1,0 +1,75 @@
+1.- Connect to this API securely in PHP.
+
+The best approach to create a secure API connection is to create a single configured Guzzle client (base_uri, timeouts). 
+Making sure the API Key is stored outside the source code (environment variable, secrets manager) and is correctly attached to the header of the request.
+Finally, send a request to the API using any of the methods (GET, POST, PUT, DELETE, HEAD, PATCH, SEND).
+
+
+2.- Handle validations, authentication and potencial errors.
+
+You can handle client errors from a Guzzle API response by using a try-catch block. This method helps catching general ClientException, RequestException and RuntimeException errors. By decoding the response object and its body you can get the status code and specific error messages.
+For Guzzle's API, you can use its Middleware stack which enables you to easily manage every request and response such as adding API Keys to headers, handle specific errors and retry failed requests. 
+
+3.- Store and sanitize the response data before saving it in a database.
+
+You need to correctly decode de JSON response into a PHP associative array or object and then validate the data against the desired schema. 
+You can use validation libraries depending on the complexity of the API responses. It is recommended to sanitize the data before displaying it in an HTML page such as managing special characters using HTML Purifier.
+
+
+// Guzzle API Example
+<?php
+require __DIR__ . "/vendor/autoload.php";
+
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
+
+$apiKey = getenv('ProcessMakerAPIKey');
+
+// Build headers
+$headers = [
+    'Accept'        => 'application/json',
+    'API-Key'       => $apiKey,
+    'Authorization' => 'Bearer ' . $apiKey,
+];
+
+$client = new Client([
+    'base_uri'        => 'https://exampleapi.com/data/v1/',
+    'timeout'         => 5.0,
+    'connect_timeout' => 10.0,
+    'verify'          => true,
+]);
+
+try {
+    $response = $client->request('GET', 'endpoint-name', [
+        'headers' => $headers,
+        'auth' => ['username', 'password']
+    ]);
+    echo $response->getBody()->getContents();
+
+} catch (ClientException $e) {
+    $error      = $e->getResponse();
+    $statusCode = $error->getStatusCode();
+    $errorBody  = $error->getBody()->getContents();
+
+    if ($statusCode == 401) {
+        echo "Authentication failed: Unauthorized. " . $errorBody;
+    } elseif ($statusCode == 403) {
+        echo "Authentication failed: Forbidden. " . $errorBody;
+    } else {
+        echo "Client error: " . $statusCode . " - " . $errorBody;
+    }
+
+} catch (RequestException $e) {
+    if ($e->hasResponse()) {
+        echo "Request error with response: " . $e->getResponse()->getStatusCode();
+    } else {
+        echo "Request error without response: " . $e->getMessage();
+    }
+
+} catch (\Exception $e) {
+    echo "An unexpected error occurred: " . $e->getMessage();
+}
+
+?>
+
