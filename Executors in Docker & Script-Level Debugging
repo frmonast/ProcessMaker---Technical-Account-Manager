@@ -1,1 +1,56 @@
+1.	How would you create a basic Docker?
 
+To create a Docker container, first, make sure all dependencies are installed.
+Then you need to create a text file (e.g. DockerFile) in the root directory of the project.
+Inside the docker file you need to add all the instructions to the define what the image will do and run. 
+For example:
+- Define Base Image (e.g. FROM php:8.2-cli)
+- Set Working Directory (e.g. WORKDIR /app)
+- Copy Application Files (e.g. COPY . /app)
+- Make Script Executable (e.g. RUN chmod +x /app/task.sh)
+
+Once the Docker file is done, you will need to build and run it with their respective commands. 
+
+2.	Using the public API from question 1, how would you obtain data and order it in any type of sort?
+
+Once the data is decoded from the API response (Guzzle example), we will need to sort it using any of the sort PHP functions.
+For example:
+
+$data = json_decode($response)->getBody(), true);
+usort($data, function($a, $b){
+	return strcmp($a['name'], $b['name']);
+});
+
+3.	Access and inspect the Docker container to debug the issue.
+
+First, I would read the container logs to look for a specific error 
+	docker logs <container_name>
+Test the script manually with debug mode
+	bash -x /app/task.sh
+Check whether volumes or mounts overwrote the script
+	docker inspect <container_name>
+You can inspect further by entering the container shell by running the following command:
+	docker exec -it <container_name> /bin/bash
+
+
+4.	Verify that the script exists and has the correct permissions.
+
+To check that the script exists and their permissions you would need to run a simple ls command 
+	ls -la /directory/ 
+	
+If permissions need to be modified, use the chmod command.
+
+
+5.	Identify whether the issue originates in the Docker configuration, the script itself, or the process definition.
+
+Using the docker inspect command you can check the information of the issue to determine what are the causes; either syntax errors, libraries not installed, wrong relative paths or environment variables.
+You can also manually check the issue using the bash -x command. 
+
+6.	Please mention which libraries you would use to generate a PDF, change font types.
+
+I would use either dompdf or TCPDF to generate PDF files and to change the font types.
+
+7.	How would you install a new package with composer?
+
+composer require vendor/package-name
+composer dump-autoload
