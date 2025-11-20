@@ -12,7 +12,7 @@ For Guzzle's API, you can use its Middleware stack which enables you to easily m
 
 3.- Store and sanitize the response data before saving it in a database.
 
-You need to correctly decode de JSON response into a PHP associative array or object and then validate the data against the desired schema. 
+You need to correctly decode the JSON response into a PHP associative array or object and then validate the data against the desired schema. 
 You can use validation libraries depending on the complexity of the API responses. It is recommended to sanitize the data before displaying it in an HTML page such as managing special characters using HTML Purifier.
 
 
