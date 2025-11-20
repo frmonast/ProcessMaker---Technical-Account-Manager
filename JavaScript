@@ -1,1 +1,32 @@
 
+function analyzeProcessLogs(logs) {
+  let successTotal = 0;
+  let successCount = 0;
+  let failedCount = 0;
+  let pendingCount = 0;
+
+  for (const log of logs) {
+	  
+    if (!["success", "error", "pending"].includes(log.status)) continue;
+
+    if (log.status === "error") failedCount++;
+    if (log.status === "pending") pendingCount++;
+
+    if (log.status === "success") {
+
+      if (!log.execution || log.execution.time == null) continue;
+
+      const time = Number(log.execution.time);
+      if (isNaN(time)) continue;
+
+      successTotal += time;
+      successCount++;
+    }
+  }
+
+  return {
+    averageSuccessTime: successCount > 0 ? successTotal / successCount : 0,
+    failedCount,
+    pendingCount
+  };
+}
