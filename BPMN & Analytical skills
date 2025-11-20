@@ -1,1 +1,29 @@
+1.	Please model a simple workflow in any BPMN tool
+
+Event Start -> Submit Request -> Approval -> If Approved -> Generate script -> End
+											-> If Rejected -> Notify Rejection -> End
+
+2.	The steps you would follow to investigate where the process is stuck (e.g., tokens, script tasks, user tasks, boundary events).
+
+- Locate and analyze the specific case/task.
+- Inspect and check if the task has been completed and why it got stuck in approval.
+- Make sure that the next task exists and is assigned correctly (Check workflow).
+- Check for any conditions or events that may have triggered the reported issue. 
+- If needed, duplicate the task and try to replicate the issue to maybe find the origin of the issue.
+
+
+3.	How would you communicate with the client to gather information without overwhelming them technically?
+
+First I would acknowledge the reported issue and apologize for any inconvenience.
+I would ask the client to provide all the necessary information to analyze the reported issue. 
+- Client Number or Task Number
+- Any specific error messages (Screenshot if possible)
+- Date of the issue
+- Resolution Priority or Urgency
+
+4.	How would you report progress and set realistic expectations?
+
+After gathering all the necessary information about the reported issue, I would communicate to the client that we have started reviewing the issue and would give them an estimate of the next update or resolution.
+Always provide clear timelines and keep the client informed (according to resolution progress).
+Inform the client when the issue is resolved, giving a resolution summary avoiding technical terms but keeping it clear and simple.  
 
