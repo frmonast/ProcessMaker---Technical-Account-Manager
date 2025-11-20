@@ -1,0 +1,36 @@
+1.	Describe the systematic steps you would take to diagnose and resolve this issue.
+
+First, one must try to replicate the error in the development or staging environment while running a debbuging tool or having logs enabled.
+Check all error messages to analyze and diagnose the origin of the issue. 
+Make sure all config files are correct and validate that the .env file was not overwritten.
+Also, refresh or clear the cache since that is a common issue with old config values in Laravel.
+Check and review recent changes or updates made.
+
+
+2.	Mention specific Laravel tools or commands you would use (e.g., configuration caching, composer autoload, .env validation, logging).
+
+For Debugging, I would temporarily enable debug in .env to check if there are any clear error messages.
+
+Commands that I would use to clear any cache realted issues:
+	php artisan config:clear (Clear config cache)
+	php artisan config:cache (Rebuild config cache)
+	php artisan cache:clear (Clear general cache)
+	php artisan route:clear (Clear route cache)
+	php artisan view:clear (Clear view cache)
+
+
+Logging & Debugging
+php artisan tinker
+php artisan tail
+
+
+
+3.	Explain how the Laravel framework works under a design pattern like MVC.
+
+When a user sends a request, a defined Route decides which Controller handles it.
+The Controller interacts with the Models that access the information on the database.
+Finally, the Controller returns the data to View which renders the HTML.
+
+Model -> Handles database queries, relationships, mutators, accessors.
+View -> Generate the HTML (Blade, Vue, etc.)
+Controller -> Receives HTTP requests, uses models to get data and returns views or JSON responses.
