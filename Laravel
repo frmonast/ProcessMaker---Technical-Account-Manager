@@ -11,7 +11,7 @@ Check and review recent changes or updates made.
 
 For Debugging, I would temporarily enable debug in .env to check if there are any clear error messages.
 
-Commands that I would use to clear any cache realted issues:
+Commands that I would use to clear any cache related issues:
 	php artisan config:clear (Clear config cache)
 	php artisan config:cache (Rebuild config cache)
 	php artisan cache:clear (Clear general cache)
